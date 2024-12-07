@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { IoMdEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom';
 import OAuth from '../components/OAuth';
-import { signInWithEmailAndPassword, auth, getAuth } from 'firebase/auth';
+import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { toast } from 'react-toastify';
 
 export default function SignIn() {
@@ -13,7 +13,7 @@ export default function SignIn() {
         password: "",
     });
     const {email, password} = formData;
-    const navigate = useNavigate;
+    const navigate = useNavigate();
     function onChange(e) {
         setFormData((prevState)=>({
             ...prevState,
@@ -24,13 +24,13 @@ export default function SignIn() {
         e.preventDefault()
         try {
             const auth = getAuth()
-            const userCredential = await signInWithEmailAndPassword (auth, email, password)
-            if(userCredential.user) {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password)
+            if(userCredential) {
                 navigate("/")
             }
         } catch (error) {
             toast.error("bad user credentials")
-        }        
+        }
     }
   return (
     <section>
